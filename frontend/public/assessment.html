@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MargIntel - Assessment</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap text-sage"></i>
+            <h2>MargIntel</h2>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li><a href="assessment.html" class="active"><i class="fa-solid fa-clipboard-list"></i> Assessment</a></li>
+            <li><a href="strength.html" id="nav-strength"><i class="fa-solid fa-dumbbell"></i> Strength Analysis</a></li>
+            <li><a href="prediction.html" id="nav-prediction"><i class="fa-solid fa-bullseye"></i> Career Prediction</a></li>
+            <li><a href="reports.html" id="nav-reports"><i class="fa-solid fa-file-pdf"></i> PDF Reports</a></li>
+            <li class="menu-divider"></li>
+            <li><a href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a></li>
+            <li><a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            <li id="admin-nav" style="display: none;"><a href="admin.html"><i class="fa-solid fa-shield-halved"></i> Admin Panel</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout(event)"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-header">
+            <button class="mobile-toggle" id="mobile-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="header-user">
+                <span id="welcome-msg">Welcome, User</span>
+                <div class="user-avatar" id="user-avatar-initial">U</div>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <div class="page-title">
+                <h1>Career Assessment</h1>
+                <p>Complete your profile to receive intelligent predictions.</p>
+            </div>
+
+            <!-- Enhanced Multi-Step Form Wrapper -->
+            <div class="assessment-container">
+                
+                <!-- Progress Indicator -->
+                <div class="progress-bar">
+                    <div class="progress-step active" id="step1-indicator">
+                        <div class="step-circle">1</div>
+                        <span>Academic Marks</span>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="step2-indicator">
+                        <div class="step-circle">2</div>
+                        <span>Psychometric Profile</span>
+                    </div>
+                </div>
+
+                <!-- Step 1: Academic Form (10th/12th selector) -->
+                <div id="step-1" class="step-content active">
+                    <div class="card-form">
+                        <h3>Academic History</h3>
+                        
+                        <div class="form-group mb-4">
+                            <label>Select Standard Completed</label>
+                            <select id="standard-select" class="form-select" onchange="toggleStandardForm()">
+                                <option value="" disabled selected>Choose your highest completed level</option>
+                                <option value="10">10th Standard</option>
+                                <option value="12">12th Standard</option>
+                            </select>
+                        </div>
+
+                        <!-- 10th Form -->
+                        <div id="form-10th" style="display: none;">
+                            <div class="grid-2-cols">
+                                <div class="form-group">
+                                    <label>Science Score (%)</label>
+                                    <input type="number" id="sc_10" min="0" max="100">
+                                </div>
+                                <div class="form-group">
+                                    <label>Maths Score (%)</label>
+                                    <input type="number" id="math_10" min="0" max="100">
+                                </div>
+                                <div class="form-group">
+                                    <label>English Score (%)</label>
+                                    <input type="number" id="eng_10" min="0" max="100">
+                                </div>
+                            </div>
+                            <div class="form-actions mt-4">
+                                <span></span>
+                                <button class="btn-primary" onclick="submitStep1(10)">Continue <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- 12th Form -->
+                        <div id="form-12th" style="display: none;">
+                            <div class="grid-2-cols">
+                                <div class="form-group">
+                                    <label>Physics Score (%)</label>
+                                    <input type="number" id="phy_12" min="0" max="100">
+                                </div>
+                                <div class="form-group">
+                                    <label>Chemistry Score (%)</label>
+                                    <input type="number" id="chem_12" min="0" max="100">
+                                </div>
+                                <div class="form-group">
+                                    <label>Maths Score (%)</label>
+                                    <input type="number" id="math_12" min="0" max="100">
+                                </div>
+                                <div class="form-group">
+                                    <label>Biology Score (%)</label>
+                                    <input type="number" id="bio_12" min="0" max="100">
+                                </div>
+                            </div>
+                            <div class="form-actions mt-4">
+                                <span></span>
+                                <button class="btn-primary" onclick="submitStep1(12)">Continue <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Psychometric Form -->
+                <div id="step-2" class="step-content" style="display: none;">
+                    <div class="card-form">
+                        <h3>Psychometric Evaluation</h3>
+                        <p class="text-muted mb-4">Rate yourself on a scale of 1 (Low) to 5 (High) for the following traits.</p>
+                        
+                        <div class="psycho-questions">
+                            <div class="form-group">
+                                <label>Logical Reasoning & Problem Solving</label>
+                                <select id="psy_logical" class="form-select" style="padding: 10px; width: 100%; border: 1px solid var(--border); border-radius: 8px;">
+                                    <option value="1">1 (Low)</option>
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3 (Neutral)</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5 (High)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Creativity & Originality</label>
+                                <select id="psy_creative" class="form-select" style="padding: 10px; width: 100%; border: 1px solid var(--border); border-radius: 8px;">
+                                    <option value="1">1 (Low)</option>
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3 (Neutral)</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5 (High)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Communication & Extraversion</label>
+                                <select id="psy_comm" class="form-select" style="padding: 10px; width: 100%; border: 1px solid var(--border); border-radius: 8px;">
+                                    <option value="1">1 (Low)</option>
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3 (Neutral)</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5 (High)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Attention to Detail & Organization</label>
+                                <select id="psy_detail" class="form-select" style="padding: 10px; width: 100%; border: 1px solid var(--border); border-radius: 8px;">
+                                    <option value="1">1 (Low)</option>
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3 (Neutral)</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5 (High)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Leadership & Team Managment</label>
+                                <select id="psy_leader" class="form-select" style="padding: 10px; width: 100%; border: 1px solid var(--border); border-radius: 8px;">
+                                    <option value="1">1 (Low)</option>
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3 (Neutral)</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5 (High)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="grid-2-cols">
+                            <div class="form-group">
+                                <label>Primary Interest (Mandatory)</label>
+                                <select id="interest_1" class="form-select" style="padding: 10px; width: 100%; border: 1px solid var(--border); border-radius: 8px;">
+                                    <option value="Technology">Technology & Programming</option>
+                                    <option value="Healthcare">Healthcare & Medicine</option>
+                                    <option value="Business">Business & Management</option>
+                                    <option value="Creative">Creative Arts & Design</option>
+                                    <option value="Engineering">Core Engineering</option>
+                                    <option value="Science">Pure Sciences</option>
+                                    <option value="Finance">Finance & Accounting</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Secondary Interest (Mandatory)</label>
+                                <select id="interest_2" class="form-select" style="padding: 10px; width: 100%; border: 1px solid var(--border); border-radius: 8px;">
+                                    <option value="Science">Pure Sciences</option>
+                                    <option value="Technology">Technology & Programming</option>
+                                    <option value="Healthcare">Healthcare & Medicine</option>
+                                    <option value="Business">Business & Management</option>
+                                    <option value="Creative">Creative Arts & Design</option>
+                                    <option value="Engineering">Core Engineering</option>
+                                    <option value="Finance">Finance & Accounting</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Optional Interest</label>
+                            <select id="interest_3" class="form-select" style="padding: 10px; width: 100%; border: 1px solid var(--border); border-radius: 8px;">
+                                <option value="">None / No Preference</option>
+                                <option value="Sports">Sports & Fitness</option>
+                                <option value="Humanities">Humanities & Social Sciences</option>
+                                <option value="Marketing">Marketing & Communication</option>
+                                <option value="Law">Law & Governance</option>
+                            </select>
+                        </div>
+
+                        <div class="form-actions mt-4">
+                            <button class="btn-secondary" onclick="goBackToStep1()"><i class="fa-solid fa-arrow-left mr-2"></i> Back</button>
+                            <button class="btn-primary" onclick="submitFinalAssessment()" id="finalSubmitBtn">Generate Final Prediction <i class="fa-solid fa-wand-magic-sparkles ml-2"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        // Init User
+        const user = JSON.parse(localStorage.getItem('margintel_user') || '{}');
+        document.getElementById('welcome-msg').textContent = `Welcome, ${user.full_name || 'Student'}`;
+        document.getElementById('user-avatar-initial').textContent = (user.full_name || 'U').charAt(0).toUpperCase();
+        if (user.role === 'admin') document.getElementById('admin-nav').style.display = 'block';
+
+        let assessmentData = {
+            standard: null,
+            academic: {},
+            psychometric: {}
+        };
+
+        function toggleStandardForm() {
+            const val = document.getElementById('standard-select').value;
+            if (val === "10") {
+                document.getElementById('form-10th').style.display = 'block';
+                document.getElementById('form-12th').style.display = 'none';
+            } else if (val === "12") {
+                document.getElementById('form-10th').style.display = 'none';
+                document.getElementById('form-12th').style.display = 'block';
+            }
+        }
+
+        function submitStep1(std) {
+            assessmentData.standard = std;
+            if (std === 10) {
+                assessmentData.academic = {
+                    science: document.getElementById('sc_10').value,
+                    maths: document.getElementById('math_10').value,
+                    english: document.getElementById('eng_10').value
+                };
+            } else {
+                assessmentData.academic = {
+                    physics: document.getElementById('phy_12').value,
+                    chemistry: document.getElementById('chem_12').value,
+                    maths: document.getElementById('math_12').value,
+                    biology: document.getElementById('bio_12').value
+                };
+            }
+
+            // Move to step 2 visually
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'block';
+            
+            document.getElementById('step2-indicator').classList.add('active');
+            document.querySelector('.progress-line').style.backgroundColor = 'var(--primary)';
+        }
+
+        function goBackToStep1() {
+            document.getElementById('step-2').style.display = 'none';
+            document.getElementById('step-1').style.display = 'block';
+            
+            document.getElementById('step2-indicator').classList.remove('active');
+            document.querySelector('.progress-line').style.backgroundColor = '#E7E2D9';
+        }
+
+        async function submitFinalAssessment() {
+            const btn = document.getElementById('finalSubmitBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+            btn.disabled = true;
+
+            assessmentData.psychometric = {
+                logical: document.getElementById('psy_logical').value,
+                creative: document.getElementById('psy_creative').value,
+                communication: document.getElementById('psy_comm').value,
+                detail: document.getElementById('psy_detail').value,
+                leadership: document.getElementById('psy_leader').value,
+                interest1: document.getElementById('interest_1').value,
+                interest2: document.getElementById('interest_2').value,
+                interest3: document.getElementById('interest_3').value
+            };
+
+            try {
+                // Post to unified endpoint based on existing predict_routes 
+                // Or handle separately. Since excel_processor handles flat, we send the merged object.
+                const endpoint = assessmentData.standard === 10 ? '/predict/10th' : '/predict/12th';
+                
+                // Note: The previous backend logic required specific flat keys.
+                // We'll update predict_routes.py soon to handle JSON properly.
+                // Assuming modern JSON proxy architecture in Phase 2 backend.
+                
+                const response = await fetchWithAuth(`${API_BASE_URL}${endpoint}`, {
+                    method: 'POST',
+                    body: JSON.stringify(assessmentData)
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Force update local user completed flag
+                    user.assessment_completed = true;
+                    localStorage.setItem('margintel_user', JSON.stringify(user));
+                    
+                    // Redirect to prediction results
+                    window.location.href = 'prediction.html';
+                } else {
+                    alert('Error: ' + result.message);
+                    btn.innerHTML = 'Generate Final Prediction <i class="fa-solid fa-wand-magic-sparkles ml-2"></i>';
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                alert('Connection Error: ' + err.message);
+                btn.innerHTML = 'Generate Final Prediction <i class="fa-solid fa-wand-magic-sparkles ml-2"></i>';
+                btn.disabled = false;
+            }
+        }
+        
+        // Mobile Sidebar Toggle
+        document.getElementById('mobile-toggle').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

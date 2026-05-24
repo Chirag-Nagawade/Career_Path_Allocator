@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MargIntel - Career Prediction</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap text-sage"></i>
+            <h2>MargIntel</h2>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li><a href="assessment.html" id="nav-assessment"><i class="fa-solid fa-clipboard-list"></i> Assessment</a></li>
+            <li><a href="strength.html" id="nav-strength"><i class="fa-solid fa-dumbbell"></i> Strength Analysis</a></li>
+            <li><a href="prediction.html" class="active"><i class="fa-solid fa-bullseye"></i> Career Prediction</a></li>
+            <li><a href="reports.html" id="nav-reports"><i class="fa-solid fa-file-pdf"></i> PDF Reports</a></li>
+            <li class="menu-divider"></li>
+            <li><a href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a></li>
+            <li><a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            <li id="admin-nav" style="display: none;"><a href="admin.html"><i class="fa-solid fa-shield-halved"></i> Admin Panel</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout(event)"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <button class="mobile-toggle" id="mobile-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="header-user">
+                <span id="welcome-msg">Welcome, User</span>
+                <div class="user-avatar" id="user-avatar-initial">U</div>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <div class="page-title">
+                <h1>Your Intelligent Prediction</h1>
+                <p>Based on our ensemble machine learning models analyzing your academic and psychometric data.</p>
+            </div>
+
+            <div id="prediction-container">
+                <div class="loading-state">
+                    <i class="fa-solid fa-spinner fa-spin"></i> Analyzing data model output...
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = JSON.parse(localStorage.getItem('margintel_user') || '{}');
+            if (!user.email) return window.location.href = 'login.html';
+
+            document.getElementById('welcome-msg').textContent = `Welcome, ${user.full_name || 'Student'}`;
+            document.getElementById('user-avatar-initial').textContent = (user.full_name || 'U').charAt(0).toUpperCase();
+            if (user.role === 'admin') document.getElementById('admin-nav').style.display = 'block';
+
+            const container = document.getElementById('prediction-container');
+            
+            try {
+                const response = await fetchWithAuth(`${API_BASE_URL}/prediction`);
+                const data = await response.json();
+
+                if (!data.status || data.error) {
+                    container.innerHTML = `
+                        <div class="empty-state-card">
+                            <i class="fa-solid fa-lock empty-icon"></i>
+                            <h3>Assessment Incomplete</h3>
+                            <p>You must complete the academic and psychometric assessment to unlock your predictions.</p>
+                            <a href="assessment.html" class="btn-primary mt-3">Take Assessment</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Render dynamic predictions
+                const predictions = data.prediction || [];
+                if (predictions.length === 0) {
+                    container.innerHTML = `<div class="empty-state-card"><i class="fa-solid fa-lock empty-icon"></i><h3>No Predictions Yet</h3><p>Please complete your assessment first.</p><a href="assessment.html" class="btn-primary mt-3">Take Assessment</a></div>`;
+                    return;
+                }
+                let cardsHtml = '';
+                
+                predictions.forEach((pred, index) => {
+                    // Backend stores keys as 'career' and 'probability' or the new 'match_score'
+                    const careerName = pred.career || pred.Career_Name || 'Unknown Career';
+                    const probability = pred.match_score || Math.round((pred.probability || 0) * 100);
+                    const isTop = index === 0;
+                    const scoreClass = probability >= 80 ? 'high-score' : (probability >= 60 ? 'med-score' : 'low-score');
+                    
+                    cardsHtml += `
+                        <div class="prediction-card ${isTop ? 'top-match' : ''}">
+                            ${isTop ? '<div class="top-badge"><i class="fa-solid fa-star"></i> Top Match</div>' : ''}
+                            <div class="pred-header">
+                                <div class="pred-title">
+                                    <h3>${careerName}</h3>
+                                    <span class="match-score ${scoreClass}">${probability}% Match</span>
+                                </div>
+                            </div>
+                            <div class="pred-body">
+                                <p><strong>Why this fits:</strong> ${pred.reason || 'Based on your marks, psychometric scores, and interests, the system predicts this is the most aligned career path for your profile.'}</p>
+                                <div class="pred-progress-bg">
+                                    <div class="pred-progress-fill" style="width: ${probability}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = `
+                    <div class="prediction-grid">
+                        ${cardsHtml}
+                    </div>
+                    
+                    <div class="text-center mt-5" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                        <a href="colleges.html" class="btn-primary btn-lg"><i class="fa-solid fa-school mr-2"></i> Get Personalized College Recommendations</a>
+                        <a href="strength.html" class="btn-primary btn-lg" style="background: transparent; border: 2px solid var(--primary); color: var(--primary);">View Strength Analysis <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                    </div>
+                `;
+
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="error-state">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <p>Error retrieving predictions.</p>
+                    </div>
+                `;
+            }
+
+            document.getElementById('mobile-toggle').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

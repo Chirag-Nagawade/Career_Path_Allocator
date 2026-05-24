@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MargIntel - Strength Analysis</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap text-sage"></i>
+            <h2>MargIntel</h2>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li><a href="assessment.html" id="nav-assessment"><i class="fa-solid fa-clipboard-list"></i> Assessment</a></li>
+            <li><a href="strength.html" class="active"><i class="fa-solid fa-dumbbell"></i> Strength Analysis</a></li>
+            <li><a href="prediction.html" id="nav-prediction"><i class="fa-solid fa-bullseye"></i> Career Prediction</a></li>
+            <li><a href="reports.html" id="nav-reports"><i class="fa-solid fa-file-pdf"></i> PDF Reports</a></li>
+            <li class="menu-divider"></li>
+            <li><a href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a></li>
+            <li><a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            <li id="admin-nav" style="display: none;"><a href="admin.html"><i class="fa-solid fa-shield-halved"></i> Admin Panel</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout(event)"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <button class="mobile-toggle" id="mobile-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="header-user">
+                <span id="welcome-msg">Welcome, User</span>
+                <div class="user-avatar" id="user-avatar-initial">U</div>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <div class="page-title">
+                <h1>Strength Analysis</h1>
+                <p>Visualizing your core competencies and behavioral traits.</p>
+            </div>
+
+            <div id="strength-container">
+                <div class="loading-state" id="loading-spinner">
+                    <i class="fa-solid fa-spinner fa-spin"></i> Loading analysis charts...
+                </div>
+
+                <!-- Hidden by default, shown when data loaded -->
+                <div id="charts-wrapper" style="display: none;">
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h3>Psychometric Profile (Radar)</h3>
+                            <div class="canvas-container">
+                                <canvas id="psychoRadarChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <h3>Academic Performance (Bar)</h3>
+                            <div class="canvas-container">
+                                <canvas id="academicBarChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Analysis Section -->
+                    <div class="page-title mt-5">
+                        <h2>Detailed Competency Breakdown</h2>
+                        <p>A qualitative look at your strongest areas.</p>
+                    </div>
+
+                    <div class="grid-2-cols" id="detailed-analysis-grid">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = JSON.parse(localStorage.getItem('margintel_user') || '{}');
+            if (!user.email) return window.location.href = 'login.html';
+
+            document.getElementById('welcome-msg').textContent = `Welcome, ${user.full_name || 'Student'}`;
+            document.getElementById('user-avatar-initial').textContent = (user.full_name || 'U').charAt(0).toUpperCase();
+            if (user.role === 'admin') document.getElementById('admin-nav').style.display = 'block';
+
+            const container = document.getElementById('strength-container');
+            const chartsWrapper = document.getElementById('charts-wrapper');
+            const spinner = document.getElementById('loading-spinner');
+            const analysisGrid = document.getElementById('detailed-analysis-grid');
+
+            try {
+                const response = await fetchWithAuth(`${API_BASE_URL}/strength-analysis`);
+                const result = await response.json();
+                
+                if (!response.ok || !result.status) {
+                    throw new Error(result.message || 'Assessment incomplete');
+                }
+
+                spinner.style.display = 'none';
+                chartsWrapper.style.display = 'block';
+
+                const data = result.data;
+                const primaryColor = 'rgba(95, 141, 78, 0.6)';
+                const primaryBorder = '#5F8D4E';
+                
+                const psychoScores = {
+                    logical: data.psychometric.logical || 3,
+                    creative: data.psychometric.creative || 3,
+                    communication: data.psychometric.communication || 3,
+                    detail: data.psychometric.detail || 3,
+                    leadership: data.psychometric.leadership || 3
+                };
+
+                // Generate Detailed Cards
+                const descriptions = {
+                    logical: [
+                        "Foundational reasoning skills. Focus on base principles.",
+                        "Average analytical depth. Capable of standard problem-solving.",
+                        "Strong logical core. High aptitude for structured data and objective analysis.",
+                        "Exceptional analytical mind. Thrives in complex mathematical or engineering environments."
+                    ],
+                    creative: [
+                        "Practical mindset. Prefers structured routines over abstract ideas.",
+                        "Moderate creative output. Balanced approach between logic and art.",
+                        "Highly imaginative. Able to see connections others miss. Great for design or research.",
+                        "Visionary creativity. Constant innovation and unique problem-solving perspectives."
+                    ],
+                    communication: [
+                        "Introverted/Technical focus. Prefers independent work.",
+                        "Functional communication. Capable of teamwork and reporting.",
+                        "Persuasive and clear. Excellent for coaching, sales, or management.",
+                        "Natural orator. High emotional intelligence and interpersonal magnetism."
+                    ],
+                    detail: [
+                        "High-level thinker. May ignore minor technical errors for the big picture.",
+                        "Standard precision. Careful with primary documentation.",
+                        "Meticulous eye. High reliability in quality control or financial auditing.",
+                        "Surgical precision. Zero-tolerance for error; extreme organizational capability."
+                    ],
+                    leadership: [
+                        "Individual contributor. Best performance when managing own tasks.",
+                        "Emerging leader. Can coordinate small groups or peer reviews.",
+                        "Strategic mentor. Natural tendency to take charge and optimize team output.",
+                        "Inspirational captain. Thrives in high-stakes organizational governance and direction."
+                    ]
+                };
+
+                Object.keys(psychoScores).forEach(key => {
+                    const score = parseInt(psychoScores[key]);
+                    const index = Math.min(score - 1, 3); // Map 1-5 to 0-3 descriptions
+                    const text = descriptions[key][index];
+                    const icon = {
+                        logical: 'fa-brain',
+                        creative: 'fa-palette',
+                        communication: 'fa-comments',
+                        detail: 'fa-magnifying-glass',
+                        leadership: 'fa-crown'
+                    }[key];
+
+                    analysisGrid.innerHTML += `
+                        <div class="chart-card d-flex align-items-start gap-3">
+                            <div class="stat-icon" style="background: var(--bg-main); font-size: 1.2rem; min-width: 50px; height: 50px;">
+                                <i class="fa-solid ${icon}"></i>
+                            </div>
+                            <div>
+                                <h4 class="mb-2" style="text-transform: capitalize;">${key} Profile</h4>
+                                <p class="text-muted" style="font-size: 0.95rem;">${text}</p>
+                                <div class="mt-2 text-sage" style="font-weight: 600;">Score: ${score}/5</div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Radar Chart
+                const ctxRadar = document.getElementById('psychoRadarChart').getContext('2d');
+                new Chart(ctxRadar, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Logical', 'Creative', 'Comm.', 'Detail', 'Leadership'],
+                        datasets: [{
+                            label: 'Trait Score',
+                            data: [
+                                data.psychometric.logical || 3,
+                                data.psychometric.creative || 3,
+                                data.psychometric.communication || 3,
+                                data.psychometric.detail || 3,
+                                data.psychometric.leadership || 3
+                            ],
+                            backgroundColor: 'rgba(198, 169, 105, 0.4)', // Accent Gold
+                            borderColor: '#C6A969',
+                            pointBackgroundColor: '#C6A969'
+                        }]
+                    },
+                    options: {
+                        scales: { r: { min: 0, max: 5 } }
+                    }
+                });
+
+                // Enhanced Bar Chart with Gradients
+                const ctxBar = document.getElementById('academicBarChart').getContext('2d');
+                
+                // Fix: Properly extract academic keys, ignoring metadata
+                const academicData = data.academic || {};
+                const academicKeys = Object.keys(academicData).filter(k => 
+                    !['_id', 'user_email', 'standard', 'timestamp'].includes(k)
+                );
+                const academicValues = academicKeys.map(k => academicData[k] || 0);
+
+                // Create Gradient
+                const gradient = ctxBar.createLinearGradient(0, 0, 0, 400);
+                gradient.addColorStop(0, 'rgba(95, 141, 78, 0.9)');    // Sage Green
+                gradient.addColorStop(1, 'rgba(132, 165, 157, 0.4)'); // Teal Gray
+
+                new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: academicKeys.map(k => k.replace(/_/g, ' ').toUpperCase()),
+                        datasets: [{
+                            label: 'Marks (%)',
+                            data: academicValues,
+                            backgroundColor: gradient,
+                            borderColor: '#5F8D4E',
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            borderSkipped: false,
+                            hoverBackgroundColor: 'rgba(95, 141, 78, 1)',
+                            hoverBorderColor: '#2B2B2B',
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: {
+                            duration: 2000,
+                            easing: 'easeOutQuart'
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: { font: { family: "'Inter', sans-serif", size: 12 } }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(43, 43, 43, 0.9)',
+                                titleFont: { size: 14, weight: 'bold' },
+                                bodyFont: { size: 13 },
+                                padding: 12,
+                                cornerRadius: 8,
+                                displayColors: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: { color: 'rgba(0, 0, 0, 0.05)', drawBorder: false },
+                                ticks: { font: { weight: 'bold' } }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { font: { weight: 'bold' } }
+                            }
+                        }
+                    }
+                });
+
+            } catch (error) {
+                spinner.style.display = 'none';
+                container.innerHTML += `
+                    <div class="empty-state-card">
+                        <i class="fa-solid fa-lock empty-icon"></i>
+                        <h3>Data Not Found</h3>
+                        <p>Complete your assessment to unlock visual strength analysis.</p>
+                        <a href="assessment.html" class="btn-primary mt-3">Take Assessment</a>
+                    </div>
+                `;
+            }
+
+            document.getElementById('mobile-toggle').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

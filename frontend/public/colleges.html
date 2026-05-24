@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MargIntel - College Recommendations</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .college-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary);
+            transition: transform 0.2s;
+        }
+        .college-card:hover {
+            transform: translateY(-3px);
+        }
+        .college-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .college-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .college-badge {
+            background: rgba(132, 165, 157, 0.15);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .college-details p {
+            margin: 5px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .college-details strong {
+            color: var(--text-dark);
+        }
+        .filter-section {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-end;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        .filter-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+        .pred-context {
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: rgba(132, 165, 157, 0.1);
+            border-radius: 8px;
+            color: var(--primaryDark);
+            border-left: 4px solid var(--primary);
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap text-sage"></i>
+            <h2>MargIntel</h2>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li><a href="assessment.html" id="nav-assessment"><i class="fa-solid fa-clipboard-list"></i> Assessment</a></li>
+            <li><a href="strength.html" id="nav-strength"><i class="fa-solid fa-dumbbell"></i> Strength Analysis</a></li>
+            <li><a href="prediction.html"><i class="fa-solid fa-bullseye"></i> Career Prediction</a></li>
+            <li><a href="colleges.html" class="active"><i class="fa-solid fa-school"></i> Colleges</a></li>
+            <li><a href="reports.html" id="nav-reports"><i class="fa-solid fa-file-pdf"></i> PDF Reports</a></li>
+            <li class="menu-divider"></li>
+            <li><a href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a></li>
+            <li><a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            <li id="admin-nav" style="display: none;"><a href="admin.html"><i class="fa-solid fa-shield-halved"></i> Admin Panel</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout(event)"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <button class="mobile-toggle" id="mobile-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="header-user">
+                <span id="welcome-msg">Welcome, User</span>
+                <div class="user-avatar" id="user-avatar-initial">U</div>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <div class="page-title">
+                <h1>Target Colleges & Courses</h1>
+                <p>Personalized recommendations tailored to your predicted career path and location.</p>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label for="city-select">Select Preferred City In Maharashtra</label>
+                    <select id="city-select">
+                        <option value="">-- Choose a City --</option>
+                        <option value="Pune">Pune</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Nagpur">Nagpur</option>
+                        <option value="Nashik">Nashik</option>
+                        <option value="Chhatrapati Sambhaji Nagar">Chhatrapati Sambhaji Nagar</option>
+                    </select>
+                </div>
+                <button class="btn-primary" onclick="fetchColleges()" id="fetch-btn" style="padding: 12px 24px; height: 46px;">
+                    <i class="fa-solid fa-search"></i> Search
+                </button>
+            </div>
+            
+            <div id="pred-context-container"></div>
+
+            <div id="colleges-container">
+                <div class="empty-state-card">
+                    <i class="fa-solid fa-city empty-icon"></i>
+                    <h3>Select a City</h3>
+                    <p>Choose your preferred location to view the best matches for your career path.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('margintel_user') || '{}');
+            if (!user.email) return window.location.href = 'login.html';
+
+            document.getElementById('welcome-msg').textContent = `Welcome, ${user.full_name || 'Student'}`;
+            document.getElementById('user-avatar-initial').textContent = (user.full_name || 'U').charAt(0).toUpperCase();
+            if (user.role === 'admin') document.getElementById('admin-nav').style.display = 'block';
+
+            document.getElementById('mobile-toggle').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+        });
+
+        async function fetchColleges() {
+            const city = document.getElementById('city-select').value;
+            const container = document.getElementById('colleges-container');
+            const contextContainer = document.getElementById('pred-context-container');
+            const btn = document.getElementById('fetch-btn');
+
+            if (!city) {
+                alert("Please select a city first.");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading';
+            
+            container.innerHTML = `
+                <div class="loading-state">
+                    <i class="fa-solid fa-spinner fa-spin"></i> Retrieving best college matches...
+                </div>
+            `;
+            contextContainer.innerHTML = '';
+
+            try {
+                const response = await fetchWithAuth(`${API_BASE_URL}/api/colleges/recommendations?city=${encodeURIComponent(city)}`);
+                const data = await response.json();
+
+                if (!data.status) {
+                    container.innerHTML = `
+                        <div class="empty-state-card">
+                            <i class="fa-solid fa-lock empty-icon"></i>
+                            <h3>Assessment Needed</h3>
+                            <p>${data.message || 'Complete your assessment to unlock recommendations.'}</p>
+                            <a href="assessment.html" class="btn-primary mt-3">Take Assessment</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Show context
+                contextContainer.innerHTML = `
+                    <div class="pred-context">
+                        <strong><i class="fa-solid fa-bullseye"></i> Targeting:</strong> ${data.mapped_stream} stream colleges based on your top recommended career (<strong>${data.predicted_career}</strong>) for your current standard (<strong>${data.standard}</strong>).
+                    </div>
+                `;
+
+                if (!data.recommendations || data.recommendations.length === 0) {
+                    container.innerHTML = `<div class="empty-state-card"><h3>No direct matches found in ${city}</h3><p>Try selecting another city.</p></div>`;
+                    return;
+                }
+
+                let html = '';
+                data.recommendations.forEach((col, index) => {
+                    html += `
+                        <div class="college-card">
+                            <div class="college-header">
+                                <div class="college-title">
+                                    ${index+1}. ${col.name}
+                                </div>
+                                <div class="college-badge">${col.type}</div>
+                            </div>
+                            <div class="college-details">
+                                <p><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> ${col.city}</p>
+                                <p><i class="fa-solid fa-route" style="color: var(--primary);"></i> <strong style="color: var(--primary);">Target Path:</strong> <span style="color: var(--primary); font-weight: 500;">${col.recommended_path || data.mapped_stream}</span></p>
+                                ${col.matched_courses && col.matched_courses.length > 0 ? 
+                                `<p><i class="fa-solid fa-bullseye" style="color: #d9534f;"></i> <strong>Focus Courses for You:</strong> <span style="background: rgba(217, 83, 79, 0.1); padding: 2px 8px; border-radius: 4px; color: #d9534f; font-weight: 600; font-size: 0.9em;">${col.matched_courses.join(', ')}</span></p>` : ''}
+                                <p><i class="fa-solid fa-book-open"></i> <strong style="font-size: 0.9em; color: #888;">Other Branches:</strong> <span style="font-size: 0.9em; color: #888;">${col.courses.join(', ')}</span></p>
+                                <p><i class="fa-solid fa-trophy"></i> <strong>Regional Ranking:</strong> Rank ${col.ranking}</p>
+                                <p><i class="fa-solid fa-percent"></i> <strong>Expected Cutoff:</strong> ${col.cutoff}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="error-state">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <p>Error: ${error.message || 'Error retrieving colleges. Please try again.'}</p>
+                    </div>
+                `;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-search"></i> Search';
+            }
+        }
+    </script>
+</body>
+</html>

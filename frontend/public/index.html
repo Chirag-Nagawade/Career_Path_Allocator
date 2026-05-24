@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Career Path Allocator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <h2>AI Career Path Allocator</h2>
+      <p id="welcome">Welcome! Choose your standard to find your ideal career path.</p>
+    </div>
+
+    <!-- 10th Standard Section -->
+    <div class="section-card" onclick="selectSection('tenth')">
+      <div class="section-header">
+        <h3>10th Standard</h3>
+        <span class="badge">For 10th Grade Students</span>
+      </div>
+      <p>Science, English, Maths + 5 Psychometric Questions + 3 Interests</p>
+    </div>
+
+    <!-- 12th Standard Section -->
+    <div class="section-card" onclick="selectSection('twelfth')">
+      <div class="section-header">
+        <h3>12th Standard</h3>
+        <span class="badge">For 12th Grade Students</span>
+      </div>
+      <p>Physics, Chemistry, Maths, Biology + 5 Psychometric Questions + 3 Interests</p>
+    </div>
+
+    <!-- 10th Standard Form -->
+    <div id="tenthForm" class="form-section">
+      <h3>10th Standard Career Prediction</h3>
+      
+      <div class="form-group">
+        <h4>Academic Marks (Out of 100)</h4>
+        <div class="input-grid">
+          <div class="input-container">
+            <input type="number" id="tenth_science" placeholder="Science Marks" min="0" max="100">
+            <div class="tooltip">Enter your Science marks (0-100)</div>
+          </div>
+          <div class="input-container">
+            <input type="number" id="tenth_english" placeholder="English Marks" min="0" max="100">
+            <div class="tooltip">Enter your English marks (0-100)</div>
+          </div>
+          <div class="input-container">
+            <input type="number" id="tenth_maths" placeholder="Maths Marks" min="0" max="100">
+            <div class="tooltip">Enter your Maths marks (0-100)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <h4>Psychometric Questions (Rate 1-5)</h4>
+        <div class="input-grid">
+          <div class="input-container">
+            <label>Analytical Thinking</label>
+            <select id="tenth_analytical_thinking">
+              <option value="">Select (1-5)</option>
+              <option value="1">1 - Low</option>
+              <option value="2">2 - Below Average</option>
+              <option value="3">3 - Average</option>
+              <option value="4">4 - Good</option>
+              <option value="5">5 - Excellent</option>
+            </select>
+            <div class="tooltip">Ability to analyze complex problems logically</div>
+          </div>
+          <div class="input-container">
+            <label>Creativity</label>
+            <select id="tenth_creativity">
+              <option value="">Select (1-5)</option>
+              <option value="1">1 - Low</option>
+              <option value="2">2 - Below Average</option>
+              <option value="3">3 - Average</option>
+              <option value="4">4 - Good</option>
+              <option value="5">5 - Excellent</option>
+            </select>
+            <div class="tooltip">Ability to think creatively and innovatively</div>
+          </div>
+          <div class="input-container">
+            <label>Leadership</label>
+            <select id="tenth_leadership">
+              <option value="">Select (1-5)</option>
+              <option value="1">1 - Low</option>
+              <option value="2">2 - Below Average</option>
+              <option value="3">3 - Average</option>
+              <option value="4">4 - Good</option>
+              <option value="5">5 - Excellent</option>
+            </select>
+            <div class="tooltip">Ability to lead and motivate others</div>
+          </div>
+          <div class="input-container">
+            <label>Problem Solving</label>
+            <select id="tenth_problem_solving">
+              <option value="">Select (1-5)</option>
+              <option value="1">1 - Low</option>
+              <option value="2">2 - Below Average</option>
+              <option value="3">3 - Average</option>
+              <option value="4">4 - Good</option>
+              <option value="5">5 - Excellent</option>
+            </select>
+            <div class="tooltip">Ability to solve complex problems effectively</div>
+          </div>
+          <div class="input-container">
+            <label>Communication</label>
+            <select id="tenth_communication">
+              <option value="">Select (1-5)</option>
+              <option value="1">1 - Low</option>
+              <option value="2">2 - Below Average</option>
+              <option value="3">3 - Average</option>
+              <option value="4">4 - Good</option>
+              <option value="5">5 - Excellent</option>
+            </select>
+            <div class="tooltip">Ability to communicate ideas clearly</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <h4>Interests (Select from dropdown)</h4>
+        <div class="input-grid">
+          <div class="input-container">
+            <label class="required">Interest 1 (Required)</label>
+            <select id="tenth_interest1">
+              <option value="">Select Interest</option>
+              <option value="Technology">Technology</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Science">Science</option>
+              <option value="Research">Research</option>
+              <option value="Business">Business</option>
+              <option value="Finance">Finance</option>
+              <option value="Creative Arts">Creative Arts</option>
+              <option value="Writing">Writing</option>
+              <option value="History">History</option>
+            </select>
+          </div>
+          <div class="input-container">
+            <label class="required">Interest 2 (Required)</label>
+            <select id="tenth_interest2">
+              <option value="">Select Interest</option>
+              <option value="Technology">Technology</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Science">Science</option>
+              <option value="Research">Research</option>
+              <option value="Business">Business</option>
+              <option value="Finance">Finance</option>
+              <option value="Creative Arts">Creative Arts</option>
+              <option value="Writing">Writing</option>
+              <option value="History">History</option>
+            </select>
+          </div>
+          <div class="input-container">
+            <label>Interest 3 (Optional)</label>
+            <select id="tenth_interest3">
+              <option value="">Select Interest (Optional)</option>
+              <option value="Technology">Technology</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Science">Science</option>
+              <option value="Research">Research</option>
+              <option value="Business">Business</option>
+              <option value="Finance">Finance</option>
+              <option value="Creative Arts">Creative Arts</option>
+              <option value="Writing">Writing</option>
+              <option value="History">History</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-container" id="tenthProgressContainer">
+        <div class="progress-bar" id="tenthProgressBar"></div>
+      </div>
+
+      <div class="button-group">
+        <button onclick="predictTenthCareer()">Predict Career Path</button>
+        <button onclick="analyzeTenthStrengths()" class="secondary">Analyze My Strengths</button>
+        <button onclick="goBack()" class="secondary">Back to Dashboard</button>
+      </div>
+      
+      <div id="tenthResult"></div>
+      <div id="tenthAnalysis" class="analysis-results"></div>
+    </div>
+
+    <!-- 12th Standard Form -->
+    <div id="twelfthForm" class="form-section">
+      <h3>12th Standard Career Prediction</h3>
+      
+      <div class="form-group">
+        <h4>Academic Marks (Out of 100)</h4>
+        <div class="input-grid">
+          <div class="input-container">
+            <input type="number" id="twelfth_physics" placeholder="Physics Marks" min="0" max="100">
+            <div class="tooltip">Enter your Physics marks (0-100)</div>
+          </div>
+          <div class="input-container">
+            <input type="number" id="twelfth_chemistry" placeholder="Chemistry Marks" min="0" max="100">
+            <div class="tooltip">Enter your Chemistry marks (0-100)</div>
+          </div>
+          <div class="input-container">
+            <input type="number" id="twelfth_maths" placeholder="Maths Marks" min="0" max="100">
+            <div class="tooltip">Enter your Maths marks (0-100)</div>
+          </div>
+          <div class="input-container">
+            <input type="number" id="twelfth_biology" placeholder="Biology Marks" min="0" max="100">
+            <div class="tooltip">Enter your Biology marks (0-100)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <h4>Psychometric Questions (Rate 1-5)</h4>
+        <div class="input-grid">
+          <div class="input-container">
+            <label>Analytical Thinking</label>
+            <select id="twelfth_analytical_thinking">
+              <option value="">Select (1-5)</option>
+              <option value="1">1 - Low</option>
+              <option value="2">2 - Below Average</option>
+              <option value="3">3 - Average</option>
+              <option value="4">4 - Good</option>
+              <option value="5">5 - Excellent</option>
+            </select>
+            <div class="tooltip">Ability to analyze complex problems logically</div>
+          </div>
+          <div class="input-container">
+            <label>Creativity</label>
+            <select id="twelfth_creativity">
+              <option value="">Select (1-5)</option>
+              <option value="1">1 - Low</option>
+              <option value="2">2 - Below Average</option>
+              <option value="3">3 - Average</option>
+              <option value="4">4 - Good</option>
+              <option value="5">5 - Excellent</option>
+            </select>
+            <div class="tooltip">Ability to think creatively and innovatively</div>
+          </div>
+          <div class="input-container">
+            <label>Leadership</label>
+            <select id="twelfth_leadership">
+              <option value="">Select (1-5)</option>
+              <option value="1">1 - Low</option>
+              <option value="2">2 - Below Average</option>
+              <option value="3">3 - Average</option>
+              <option value="4">4 - Good</option>
+              <option value="5">5 - Excellent</option>
+            </select>
+            <div class="tooltip">Ability to lead and motivate others</div>
+          </div>
+          <div class="input-container">
+            <label>Problem Solving</label>
+            <select id="twelfth_problem_solving">
+              <option value="">Select (1-5)</option>
+              <option value="1">1 - Low</option>
+              <option value="2">2 - Below Average</option>
+              <option value="3">3 - Average</option>
+              <option value="4">4 - Good</option>
+              <option value="5">5 - Excellent</option>
+            </select>
+            <div class="tooltip">Ability to solve complex problems effectively</div>
+          </div>
+          <div class="input-container">
+            <label>Communication</label>
+            <select id="twelfth_communication">
+              <option value="">Select (1-5)</option>
+              <option value="1">1 - Low</option>
+              <option value="2">2 - Below Average</option>
+              <option value="3">3 - Average</option>
+              <option value="4">4 - Good</option>
+              <option value="5">5 - Excellent</option>
+            </select>
+            <div class="tooltip">Ability to communicate ideas clearly</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <h4>Interests (Select from dropdown)</h4>
+        <div class="input-grid">
+          <div class="input-container">
+            <label class="required">Interest 1 (Required)</label>
+            <select id="twelfth_interest1">
+              <option value="">Select Interest</option>
+              <option value="Technology">Technology</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Science">Science</option>
+              <option value="Research">Research</option>
+              <option value="Business">Business</option>
+              <option value="Finance">Finance</option>
+              <option value="Creative Arts">Creative Arts</option>
+              <option value="Writing">Writing</option>
+              <option value="History">History</option>
+            </select>
+          </div>
+          <div class="input-container">
+            <label class="required">Interest 2 (Required)</label>
+            <select id="twelfth_interest2">
+              <option value="">Select Interest</option>
+              <option value="Technology">Technology</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Science">Science</option>
+              <option value="Research">Research</option>
+              <option value="Business">Business</option>
+              <option value="Finance">Finance</option>
+              <option value="Creative Arts">Creative Arts</option>
+              <option value="Writing">Writing</option>
+              <option value="History">History</option>
+            </select>
+          </div>
+          <div class="input-container">
+            <label>Interest 3 (Optional)</label>
+            <select id="twelfth_interest3">
+              <option value="">Select Interest (Optional)</option>
+              <option value="Technology">Technology</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Science">Science</option>
+              <option value="Research">Research</option>
+              <option value="Business">Business</option>
+              <option value="Finance">Finance</option>
+              <option value="Creative Arts">Creative Arts</option>
+              <option value="Writing">Writing</option>
+              <option value="History">History</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-container" id="twelfthProgressContainer">
+        <div class="progress-bar" id="twelfthProgressBar"></div>
+      </div>
+
+      <div class="button-group">
+        <button onclick="predictTwelfthCareer()">Predict Career Path</button>
+        <button onclick="analyzeTwelfthStrengths()" class="secondary">Analyze My Strengths</button>
+        <button onclick="goBack()" class="secondary">Back to Dashboard</button>
+      </div>
+      
+      <div id="twelfthResult"></div>
+      <div id="twelfthAnalysis" class="analysis-results"></div>
+    </div>
+
+    <div class="button-group" style="margin-top: 30px;">
+      <button onclick="logout()" class="logout">Logout</button>
+    </div>
+  </div>
+
+  <script>
+    // Display logged-in user name if available
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.name) {
+      document.getElementById("welcome").innerText = `Welcome, ${user.name}! Choose your standard to find your ideal career path.`;
+    } else {
+      // If not logged in, redirect to login page
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MargIntel - Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap text-sage"></i>
+            <h2>MargIntel</h2>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li><a href="assessment.html" id="nav-assessment"><i class="fa-solid fa-clipboard-list"></i> Assessment</a></li>
+            <li><a href="strength.html" id="nav-strength"><i class="fa-solid fa-dumbbell"></i> Strength Analysis</a></li>
+            <li><a href="prediction.html" id="nav-prediction"><i class="fa-solid fa-bullseye"></i> Career Prediction</a></li>
+            <li><a href="reports.html" id="nav-reports"><i class="fa-solid fa-file-pdf"></i> PDF Reports</a></li>
+            <li class="menu-divider"></li>
+            <li><a href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a></li>
+            <li><a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            <li id="admin-nav" style="display: none;"><a href="admin.html"><i class="fa-solid fa-shield-halved"></i> Admin Panel</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout(event)"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <header class="top-header">
+            <button class="mobile-toggle" id="mobile-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="header-user">
+                <span id="welcome-msg">Welcome, User</span>
+                <div class="user-avatar" id="user-avatar-initial">U</div>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <div class="page-title">
+                <h1>Overview</h1>
+                <p>Track your career prediction progress</p>
+            </div>
+
+            <!-- Content Container -->
+            <div id="dashboard-state-container">
+                <!-- Data loaded via JS -->
+                <div class="loading-state">
+                    <i class="fa-solid fa-spinner fa-spin"></i> Loading your data...
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- UI Logic Script -->
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = JSON.parse(localStorage.getItem('margintel_user') || '{}');
+            
+            if (!user.email) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('welcome-msg').textContent = `Welcome, ${user.full_name || 'Student'}`;
+            document.getElementById('user-avatar-initial').textContent = (user.full_name || 'U').charAt(0).toUpperCase();
+
+            if (user.role === 'admin') {
+                document.getElementById('admin-nav').style.display = 'block';
+            }
+
+            const container = document.getElementById('dashboard-state-container');
+            
+            try {
+                // Fetch latest prediction state from backend
+                const response = await fetchWithAuth(`${API_BASE_URL}/prediction`);
+                const data = await response.json();
+
+                if (!data.status || data.error === 'No prediction found') {
+                    // Assessment not completed
+                    container.innerHTML = `
+                        <div class="empty-state-card">
+                            <i class="fa-solid fa-clipboard-question empty-icon"></i>
+                            <h3>Start Your Career Assessment</h3>
+                            <p>Complete your academic and psychometric profile to get your personalized career prediction.</p>
+                            <a href="assessment.html" class="btn-primary mt-3">Take Assessment -></a>
+                        </div>
+                    `;
+                } else {
+                    // Assessment completed - show summary with real data
+                    const pred = data.prediction;
+                    const topCareer = pred && pred.length > 0 ? pred[0] : null;
+                    
+                    // Unified career name and match score percentage
+                    const careerName = topCareer ? (topCareer.career || topCareer.Career_Name || 'Unknown') : 'Unknown';
+                    const matchPct = topCareer ? (topCareer.match_score || Math.round((topCareer.probability || 0) * 100)) : 0;
+
+                    container.innerHTML = `
+                        <div class="summary-grid">
+                            <div class="summary-card main-prediction">
+                                <h3>Top Career Choice</h3>
+                                <h2 class="text-sage">${careerName}</h2>
+                                <p>Match Score: <span class="match-score-pill">${matchPct}%</span></p>
+                                <a href="prediction.html" class="btn-secondary mt-3">View Full Details</a>
+                            </div>
+                            
+                            <div class="summary-card stats-card">
+                                <h3>Quick Actions</h3>
+                                <ul class="action-list">
+                                    <li><a href="strength.html"><i class="fa-solid fa-dumbbell"></i> Analyze Strengths</a></li>
+                                    <li><a href="reports.html"><i class="fa-solid fa-download"></i> Download Report</a></li>
+                                    <li><a href="profile.html"><i class="fa-solid fa-pen"></i> Edit Profile</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="suggestions-panel" style="margin-top:1.5rem;">
+                            <div class="loading-state" style="font-size:0.9rem;">Loading personalized suggestions...</div>
+                        </div>
+                    `;
+
+                    // Load personalized suggestions
+                    try {
+                        const sRes = await fetchWithAuth(`${API_BASE_URL}/suggestions`);
+                        const sData = await sRes.json();
+                        const panel = document.getElementById('suggestions-panel');
+                        if (sData.status && sData.suggestions) {
+                            const s = sData.suggestions;
+                            let html = `
+                                <div class="suggestion-header-main">
+                                    <h3>Personalized Action Plan & Insights</h3>
+                                    <span class="badge-pill badge-info">8-Category Analysis</span>
+                                </div>
+                                
+                                <div class="action-plan-grid">`;
+
+                            const actions = s.action_plan || [];
+                            actions.forEach(text => {
+                                let icon = 'fa-circle-check';
+                                let cat = 'General';
+                                let isUrgent = false;
+
+                                if (text.includes('%')) { icon = 'fa-book'; cat = 'Subject Focus'; }
+                                if (text.includes('/5')) { icon = 'fa-brain'; cat = 'Psychometric'; }
+                                if (text.includes('Tech') || text.includes('Medical')) { icon = 'fa-lightbulb'; cat = 'Career Insight'; }
+                                if (text.includes('Recommended') || text.includes('Profile')) { icon = 'fa-star'; cat = 'Strategic Fit'; }
+                                if (text.includes('CRITICAL') || text.includes('urgent')) { icon = 'fa-triangle-exclamation'; cat = 'Urgent Remediation'; isUrgent = true; }
+                                if (text.includes('TIMELINE') || text.includes('Jan-Jun') || text.includes('Jul-Dec')) { icon = 'fa-calendar-days'; cat = 'Timeline'; }
+                                if (text.includes('SUCCESS METRIC') || text.includes('TARGET')) { icon = 'fa-bullseye'; cat = 'Success Goal'; }
+
+                                html += `
+                                    <div class="action-card ${isUrgent ? 'urgent' : ''}">
+                                        <div class="action-icon"><i class="fa-solid ${icon}"></i></div>
+                                        <h4>${cat}</h4>
+                                        <p>${text.replace(/🚨|📈|👍|🏆|🔴|🟡|🟢|🔵|💎|💻|⚙️|🏥|🔬|💼|🎨|✍️|🚀|👨‍⚕️|⭐|📖|🎯|🩺|🏅|⚠️|📅/g, '')}</p>
+                                    </div>
+                                `;
+                            });
+
+                            html += '</div>';
+                            panel.innerHTML = html;
+                        } else {
+                            panel.innerHTML = '';
+                        }
+                    } catch(e) {
+                        document.getElementById('suggestions-panel').innerHTML = '';
+                    }
+                }
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="error-state">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <p>Could not load dashboard data. Please try again later.</p>
+                    </div>
+                `;
+            }
+
+            // Mobile Sidebar Toggle
+            document.getElementById('mobile-toggle').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MargIntel - My Profile</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+        .profile-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .profile-photo:hover::after {
+            content: "\f030"; /* Camera icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #photo-input {
+            display: none;
+        }
+        .profile-details h2 {
+            margin-bottom: 4px;
+        }
+        .profile-role {
+            display: inline-block;
+            padding: 4px 12px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-radius: var(--radius-pill);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap text-sage"></i>
+            <h2>MargIntel</h2>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li><a href="assessment.html" id="nav-assessment"><i class="fa-solid fa-clipboard-list"></i> Assessment</a></li>
+            <li><a href="strength.html" id="nav-strength"><i class="fa-solid fa-dumbbell"></i> Strength Analysis</a></li>
+            <li><a href="prediction.html" id="nav-prediction"><i class="fa-solid fa-bullseye"></i> Career Prediction</a></li>
+            <li><a href="reports.html" id="nav-reports"><i class="fa-solid fa-file-pdf"></i> PDF Reports</a></li>
+            <li class="menu-divider"></li>
+            <li><a href="profile.html" class="active"><i class="fa-solid fa-user"></i> My Profile</a></li>
+            <li><a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            <li id="admin-nav" style="display: none;"><a href="admin.html"><i class="fa-solid fa-shield-halved"></i> Admin Panel</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout(event)"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <button class="mobile-toggle" id="mobile-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="header-user">
+                <span id="welcome-msg">Welcome, User</span>
+                <div class="user-avatar" id="user-avatar-initial">U</div>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+             <div class="page-title">
+                <h1>My Profile</h1>
+                <p>Manage your personal details and account settings.</p>
+            </div>
+
+            <div class="summary-card" style="max-width: 800px;">
+                <div class="profile-header">
+                    <label for="photo-input">
+                        <img id="profile-img" src="" class="profile-photo" style="display: none;">
+                        <span id="profile-initial" class="profile-photo">U</span>
+                    </label>
+                    <input type="file" id="photo-input" accept="image/png, image/jpeg, image/jpg">
+                    
+                    <div class="profile-details">
+                        <h2 id="disp-name">Loading...</h2>
+                        <p class="text-muted" id="disp-email">Loading...</p>
+                        <span class="profile-role" id="disp-role">User</span>
+                    </div>
+                </div>
+
+                <form id="profile-form">
+                    <div class="grid-2-cols mb-4">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="edit-name" class="form-select" style="padding: 12px; width: 100%; border: 1px solid var(--border); border-radius: 8px;">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="edit-email" class="form-select" disabled style="padding: 12px; width: 100%; border: 1px solid var(--border); border-radius: 8px; background: #eee;">
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-primary" id="save-profile" style="min-width: 150px;">Save Changes</button>
+                        <span id="save-msg" class="ml-3" style="font-size: 0.9rem;"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            let localUser = JSON.parse(localStorage.getItem('margintel_user') || '{}');
+            if (!localUser.email) return window.location.href = 'login.html';
+
+            if (localUser.role === 'admin') document.getElementById('admin-nav').style.display = 'block';
+
+            // Fetch live profile data
+            try {
+                const response = await fetchWithAuth(`${API_BASE_URL}/profile`);
+                const data = await response.json();
+                
+                if (data.status) {
+                    const profile = data.profile;
+                    
+                    // Update header
+                    document.getElementById('welcome-msg').textContent = `Welcome, ${profile.full_name}`;
+                    
+                    // Update display elements
+                    document.getElementById('disp-name').textContent = profile.full_name;
+                    document.getElementById('disp-email').textContent = profile.email;
+                    document.getElementById('disp-role').textContent = profile.role;
+                    
+                    // Update form inputs
+                    document.getElementById('edit-name').value = profile.full_name;
+                    document.getElementById('edit-email').value = profile.email;
+                    
+                    // Handle Profile Image
+                    if (profile.profile_photo_path) {
+                        const img = document.getElementById('profile-img');
+                        img.src = `${API_BASE_URL}${profile.profile_photo_path}`;
+                        img.onload = () => {
+                            img.style.display = 'block';
+                            document.getElementById('profile-initial').style.display = 'none';
+                        };
+                        
+                        // Update small top header avatar as well
+                        const topAvatar = document.getElementById('user-avatar-initial');
+                        topAvatar.style.backgroundImage = `url(${API_BASE_URL}${profile.profile_photo_path})`;
+                        topAvatar.style.backgroundSize = 'cover';
+                        topAvatar.textContent = '';
+                    } else {
+                        document.getElementById('profile-initial').textContent = profile.full_name.charAt(0).toUpperCase();
+                        document.getElementById('user-avatar-initial').textContent = profile.full_name.charAt(0).toUpperCase();
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching profile', error);
+            }
+
+            // Image Upload Event
+            document.getElementById('photo-input').addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const formData = new FormData();
+                formData.append('photo', file);
+                
+                document.getElementById('save-msg').textContent = 'Uploading picture...';
+                document.getElementById('save-msg').style.color = '#B59858';
+                
+                try {
+                    const response = await fetch(`${API_BASE_URL}/profile/photo`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('margintel_token')}`
+                        },
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    if (result.status) {
+                        document.getElementById('save-msg').textContent = 'Photo uploaded successfully!';
+                        document.getElementById('save-msg').style.color = 'var(--primary)';
+                        
+                        // Update UI instantly
+                        const img = document.getElementById('profile-img');
+                        img.src = `${API_BASE_URL}${result.path}?t=${new Date().getTime()}`; // cache buster
+                        img.style.display = 'block';
+                        document.getElementById('profile-initial').style.display = 'none';
+                        
+                        const topAvatar = document.getElementById('user-avatar-initial');
+                        topAvatar.style.backgroundImage = `url(${API_BASE_URL}${result.path})`;
+                        topAvatar.style.backgroundSize = 'cover';
+                        topAvatar.textContent = '';
+                        
+                        // Update localstorage optionally, though we reload live
+                        localUser.profile_photo_path = result.path;
+                        localStorage.setItem('margintel_user', JSON.stringify(localUser));
+                    } else {
+                        throw new Error(result.message);
+                    }
+                } catch (error) {
+                    document.getElementById('save-msg').textContent = error.message;
+                    document.getElementById('save-msg').style.color = 'var(--error)';
+                }
+            });
+
+            // Save Profile Event
+            document.getElementById('save-profile').addEventListener('click', async () => {
+                const newName = document.getElementById('edit-name').value;
+                const msg = document.getElementById('save-msg');
+                const btn = document.getElementById('save-profile');
+                
+                if (!newName) return;
+                
+                btn.disabled = true;
+                btn.innerHTML = 'Saving...';
+                msg.textContent = '';
+                
+                try {
+                    const response = await fetchWithAuth(`${API_BASE_URL}/profile`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ full_name: newName })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.status) {
+                        msg.textContent = 'Settings saved!';
+                        msg.style.color = 'var(--primary)';
+                        
+                        document.getElementById('disp-name').textContent = newName;
+                        document.getElementById('welcome-msg').textContent = `Welcome, ${newName}`;
+                        
+                        localUser.full_name = newName;
+                        localStorage.setItem('margintel_user', JSON.stringify(localUser));
+                    } else {
+                        throw new Error(result.message);
+                    }
+                } catch (error) {
+                    msg.textContent = error.message;
+                    msg.style.color = 'var(--error)';
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Save Changes';
+                }
+            });
+
+            document.getElementById('mobile-toggle').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

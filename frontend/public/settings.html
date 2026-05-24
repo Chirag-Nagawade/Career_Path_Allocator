@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MargIntel - Settings</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .setting-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .setting-section h3 {
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap text-sage"></i>
+            <h2>MargIntel</h2>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li><a href="assessment.html"><i class="fa-solid fa-clipboard-list"></i> Assessment</a></li>
+            <li><a href="strength.html"><i class="fa-solid fa-dumbbell"></i> Strength Analysis</a></li>
+            <li><a href="prediction.html"><i class="fa-solid fa-bullseye"></i> Career Prediction</a></li>
+            <li><a href="reports.html"><i class="fa-solid fa-file-pdf"></i> PDF Reports</a></li>
+            <li class="menu-divider"></li>
+            <li><a href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a></li>
+            <li><a href="settings.html" class="active"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            <li id="admin-nav" style="display: none;"><a href="admin.html"><i class="fa-solid fa-shield-halved"></i> Admin Panel</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout(event)"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <button class="mobile-toggle" id="mobile-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="header-user">
+                <span id="welcome-msg">Welcome, User</span>
+                <div class="user-avatar" id="user-avatar-initial">U</div>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <div class="page-title">
+                <h1>Settings</h1>
+                <p>Manage app preferences and security.</p>
+            </div>
+
+            <div style="max-width: 600px;">
+                <div class="setting-section">
+                    <h3>Security</h3>
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" class="form-select" style="padding: 10px; width: 100%; border: 1px solid var(--border); border-radius: 8px;">
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" class="form-select" style="padding: 10px; width: 100%; border: 1px solid var(--border); border-radius: 8px;">
+                    </div>
+                    <button class="btn-primary" onclick="alert('Password updated for session.')">Update Password</button>
+                </div>
+
+                <div class="setting-section">
+                    <h3>Preferences</h3>
+                    <div class="toggle-switch">
+                        <span><i class="fa-regular fa-envelope text-sage mr-2"></i> Email Notifications (Reports)</span>
+                        <input type="checkbox" checked>
+                    </div>
+                    <div class="toggle-switch">
+                        <span><i class="fa-regular fa-bell text-sage mr-2"></i> Weekly Career Insights</span>
+                        <input type="checkbox">
+                    </div>
+                </div>
+
+                <div class="setting-section" style="border-color: #D9534F;">
+                    <h3 style="color: #D9534F;">Danger Zone</h3>
+                    <p class="text-muted mb-3">Permanently delete your account and all assessment data.</p>
+                    <button class="btn-secondary" style="color: #D9534F; border-color: #D9534F;" onclick="confirmDelete()">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('margintel_user') || '{}');
+            if (!user.email) return window.location.href = 'login.html';
+
+            document.getElementById('welcome-msg').textContent = `Welcome, ${user.full_name || 'Student'}`;
+            
+            if (user.profile_photo_path) {
+                const topAvatar = document.getElementById('user-avatar-initial');
+                topAvatar.style.backgroundImage = `url(${API_BASE_URL}${user.profile_photo_path})`;
+                topAvatar.style.backgroundSize = 'cover';
+                topAvatar.textContent = '';
+            } else {
+                document.getElementById('user-avatar-initial').textContent = (user.full_name || 'U').charAt(0).toUpperCase();
+            }
+
+            if (user.role === 'admin') document.getElementById('admin-nav').style.display = 'block';
+
+            document.getElementById('mobile-toggle').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+        });
+
+        function confirmDelete() {
+            if (confirm("Are you sure you want to permanently delete your MargIntel account? This action cannot be undone.")) {
+                logout();
+            }
+        }
+    </script>
+</body>
+</html>

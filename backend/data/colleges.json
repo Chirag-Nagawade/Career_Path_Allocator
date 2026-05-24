@@ -1,0 +1,1205 @@
+[
+  {
+    "name": "Fergusson Junior College",
+    "city": "Pune",
+    "type": "Science/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Arts"
+    ],
+    "streams": [
+      "Science",
+      "Arts"
+    ],
+    "ranking": 1,
+    "cutoff": "95.0%"
+  },
+  {
+    "name": "Symbiosis Junior College",
+    "city": "Pune",
+    "type": "Commerce/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Commerce",
+      "11th Arts"
+    ],
+    "streams": [
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 2,
+    "cutoff": "92.0%"
+  },
+  {
+    "name": "Brihan Maharashtra College of Commerce (BMCC) Junior College",
+    "city": "Pune",
+    "type": "Commerce",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Commerce"
+    ],
+    "streams": [
+      "Commerce"
+    ],
+    "ranking": 1,
+    "cutoff": "94.5%"
+  },
+  {
+    "name": "Nowrosjee Wadia Junior College",
+    "city": "Pune",
+    "type": "Science/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Arts"
+    ],
+    "streams": [
+      "Science",
+      "Arts"
+    ],
+    "ranking": 3,
+    "cutoff": "86.0%"
+  },
+  {
+    "name": "Abasaheb Garware Junior College",
+    "city": "Pune",
+    "type": "Science/Commerce",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Commerce"
+    ],
+    "streams": [
+      "Science",
+      "Commerce"
+    ],
+    "ranking": 4,
+    "cutoff": "88.0%"
+  },
+  {
+    "name": "Modern College of Arts Science Commerce Junior College",
+    "city": "Pune",
+    "type": "Science/Commerce/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Commerce",
+      "11th Arts"
+    ],
+    "streams": [
+      "Science",
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 5,
+    "cutoff": "85.0%"
+  },
+  {
+    "name": "Sir Parashurambhau (SP) College Junior Division",
+    "city": "Pune",
+    "type": "Science/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Arts"
+    ],
+    "streams": [
+      "Science",
+      "Arts"
+    ],
+    "ranking": 6,
+    "cutoff": "83.0%"
+  },
+  {
+    "name": "DES Navalmal Firodia Junior College",
+    "city": "Pune",
+    "type": "Commerce/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Commerce",
+      "11th Arts"
+    ],
+    "streams": [
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 7,
+    "cutoff": "80.0%"
+  },
+  {
+    "name": "College of Engineering Pune (COEP Technological University)",
+    "city": "Pune",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "IT",
+      "Mechanical",
+      "Civil",
+      "Electrical",
+      "Electronics & Telecommunication"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 1,
+    "cutoff": "99.8%"
+  },
+  {
+    "name": "Pune Institute of Computer Technology (PICT)",
+    "city": "Pune",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "IT",
+      "Electronics & Telecommunication"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 2,
+    "cutoff": "99.2%"
+  },
+  {
+    "name": "Vishwakarma Institute of Technology (VIT Pune)",
+    "city": "Pune",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "IT",
+      "Mechanical",
+      "Civil",
+      "Electrical",
+      "Electronics"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 3,
+    "cutoff": "98.5%"
+  },
+  {
+    "name": "Symbiosis Institute of Technology (SIT)",
+    "city": "Pune",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "IT",
+      "Mechanical",
+      "Civil",
+      "Electronics & Telecommunication"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 4,
+    "cutoff": "97.0%"
+  },
+  {
+    "name": "Armed Forces Medical College (AFMC)",
+    "city": "Pune",
+    "type": "Medical",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "MBBS"
+    ],
+    "streams": [
+      "Medical"
+    ],
+    "ranking": 1,
+    "cutoff": "NEET 650+"
+  },
+  {
+    "name": "Byramjee Jeejeebhoy Government Medical College (BJMC)",
+    "city": "Pune",
+    "type": "Medical",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "MBBS",
+      "BDS"
+    ],
+    "streams": [
+      "Medical"
+    ],
+    "ranking": 2,
+    "cutoff": "NEET 630+"
+  },
+  {
+    "name": "DY Patil Medical College",
+    "city": "Pune",
+    "type": "Medical",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "MBBS",
+      "BDS",
+      "BSc Nursing",
+      "BPharm"
+    ],
+    "streams": [
+      "Medical"
+    ],
+    "ranking": 3,
+    "cutoff": "NEET 580+"
+  },
+  {
+    "name": "Fergusson Degree College",
+    "city": "Pune",
+    "type": "Science/Arts",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "BSc Physics",
+      "BSc Chemistry",
+      "BSc Mathematics",
+      "BSc Computer Science",
+      "BSc Biotechnology",
+      "BA Psychology",
+      "BA Sociology",
+      "BA Economics"
+    ],
+    "streams": [
+      "Science",
+      "Arts"
+    ],
+    "ranking": 1,
+    "cutoff": "96.0%"
+  },
+  {
+    "name": "Symbiosis College of Arts and Commerce",
+    "city": "Pune",
+    "type": "Commerce/Arts",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "BCom",
+      "BBA",
+      "BA Economics",
+      "BA Mass Communication",
+      "BA Psychology"
+    ],
+    "streams": [
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 1,
+    "cutoff": "92.0%"
+  },
+  {
+    "name": "MITCON Institute of Management (Pune)",
+    "city": "Pune",
+    "type": "Commerce",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "BBA",
+      "BCom",
+      "BBA Finance",
+      "BBA Marketing"
+    ],
+    "streams": [
+      "Commerce"
+    ],
+    "ranking": 2,
+    "cutoff": "88.0%"
+  },
+  {
+    "name": "Institute of Management Development and Research (IMDR)",
+    "city": "Pune",
+    "type": "Commerce",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "BBA",
+      "BCom",
+      "BAF"
+    ],
+    "streams": [
+      "Commerce"
+    ],
+    "ranking": 3,
+    "cutoff": "86.0%"
+  },
+  {
+    "name": "St. Xavier's Junior College",
+    "city": "Mumbai",
+    "type": "Science/Arts/Commerce",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Arts",
+      "11th Commerce"
+    ],
+    "streams": [
+      "Science",
+      "Arts",
+      "Commerce"
+    ],
+    "ranking": 1,
+    "cutoff": "94.0%"
+  },
+  {
+    "name": "Mithibai Junior College",
+    "city": "Mumbai",
+    "type": "Science/Commerce/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Commerce",
+      "11th Arts"
+    ],
+    "streams": [
+      "Science",
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 2,
+    "cutoff": "93.0%"
+  },
+  {
+    "name": "Narsee Monjee (NM) Junior College",
+    "city": "Mumbai",
+    "type": "Commerce",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Commerce"
+    ],
+    "streams": [
+      "Commerce"
+    ],
+    "ranking": 1,
+    "cutoff": "95.5%"
+  },
+  {
+    "name": "Ruparel Junior College",
+    "city": "Mumbai",
+    "type": "Science/Commerce/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Commerce",
+      "11th Arts"
+    ],
+    "streams": [
+      "Science",
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 3,
+    "cutoff": "90.0%"
+  },
+  {
+    "name": "Jai Hind Junior College",
+    "city": "Mumbai",
+    "type": "Science/Commerce/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Commerce",
+      "11th Arts"
+    ],
+    "streams": [
+      "Science",
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 4,
+    "cutoff": "89.0%"
+  },
+  {
+    "name": "Wilson Junior College",
+    "city": "Mumbai",
+    "type": "Science/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Arts"
+    ],
+    "streams": [
+      "Science",
+      "Arts"
+    ],
+    "ranking": 5,
+    "cutoff": "87.0%"
+  },
+  {
+    "name": "Poddar Junior College",
+    "city": "Mumbai",
+    "type": "Commerce",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Commerce"
+    ],
+    "streams": [
+      "Commerce"
+    ],
+    "ranking": 2,
+    "cutoff": "88.0%"
+  },
+  {
+    "name": "Indian Institute of Technology (IIT) Bombay",
+    "city": "Mumbai",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "Mechanical",
+      "Electrical",
+      "Civil",
+      "Aerospace",
+      "Chemical",
+      "Engineering Physics"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 1,
+    "cutoff": "JEE Advanced Top 1%"
+  },
+  {
+    "name": "Veermata Jijabai Technological Institute (VJTI)",
+    "city": "Mumbai",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "IT",
+      "Mechanical",
+      "Civil",
+      "Electrical",
+      "Electronics"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 2,
+    "cutoff": "99.5%"
+  },
+  {
+    "name": "DJ Sanghvi College of Engineering",
+    "city": "Mumbai",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "IT",
+      "Mechanical",
+      "Electronics & Telecommunication",
+      "Electrical"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 3,
+    "cutoff": "98.8%"
+  },
+  {
+    "name": "KJ Somaiya College of Engineering",
+    "city": "Mumbai",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "IT",
+      "Mechanical",
+      "Civil",
+      "Electronics & Telecommunication"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 4,
+    "cutoff": "97.5%"
+  },
+  {
+    "name": "Grant Medical College & Sir JJ Group of Hospitals",
+    "city": "Mumbai",
+    "type": "Medical",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "MBBS",
+      "BDS",
+      "MD",
+      "MS"
+    ],
+    "streams": [
+      "Medical"
+    ],
+    "ranking": 1,
+    "cutoff": "NEET 640+"
+  },
+  {
+    "name": "Seth GS Medical College & KEM Hospital",
+    "city": "Mumbai",
+    "type": "Medical",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "MBBS",
+      "MD",
+      "MS",
+      "BSc Nursing"
+    ],
+    "streams": [
+      "Medical"
+    ],
+    "ranking": 2,
+    "cutoff": "NEET 635+"
+  },
+  {
+    "name": "Lokmanya Tilak Municipal Medical College (Sion)",
+    "city": "Mumbai",
+    "type": "Medical",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "MBBS",
+      "MD",
+      "MS"
+    ],
+    "streams": [
+      "Medical"
+    ],
+    "ranking": 3,
+    "cutoff": "NEET 620+"
+  },
+  {
+    "name": "St. Xavier's College Mumbai",
+    "city": "Mumbai",
+    "type": "Science/Arts/Commerce",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "BSc Physics",
+      "BSc Chemistry",
+      "BSc Mathematics",
+      "BSc Computer Science",
+      "BSc Biotechnology",
+      "BA Psychology",
+      "BA Sociology",
+      "BA Economics",
+      "BCom"
+    ],
+    "streams": [
+      "Science",
+      "Arts",
+      "Commerce"
+    ],
+    "ranking": 1,
+    "cutoff": "95.0%"
+  },
+  {
+    "name": "Narsee Monjee College of Commerce and Economics",
+    "city": "Mumbai",
+    "type": "Commerce",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "BCom",
+      "BBA",
+      "BAF",
+      "BMS",
+      "BFM"
+    ],
+    "streams": [
+      "Commerce"
+    ],
+    "ranking": 1,
+    "cutoff": "93.0%"
+  },
+  {
+    "name": "HR College of Commerce and Economics",
+    "city": "Mumbai",
+    "type": "Commerce",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "BCom",
+      "BBA",
+      "BAF",
+      "BMS",
+      "BFM",
+      "BAF"
+    ],
+    "streams": [
+      "Commerce"
+    ],
+    "ranking": 2,
+    "cutoff": "91.0%"
+  },
+  {
+    "name": "Sophia College for Women",
+    "city": "Mumbai",
+    "type": "Arts/Science",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "BA Psychology",
+      "BA Sociology",
+      "BA English",
+      "BA History",
+      "BSc Mathematics",
+      "BSc Chemistry"
+    ],
+    "streams": [
+      "Arts",
+      "Science"
+    ],
+    "ranking": 2,
+    "cutoff": "88.0%"
+  },
+  {
+    "name": "Dr. Ambedkar Junior College",
+    "city": "Nagpur",
+    "type": "Science/Commerce/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Commerce",
+      "11th Arts"
+    ],
+    "streams": [
+      "Science",
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 1,
+    "cutoff": "85.0%"
+  },
+  {
+    "name": "Hislop Junior College",
+    "city": "Nagpur",
+    "type": "Science/Commerce/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Commerce",
+      "11th Arts"
+    ],
+    "streams": [
+      "Science",
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 2,
+    "cutoff": "82.0%"
+  },
+  {
+    "name": "Dharampeth M.P. Deo Memorial Science College Jr. Division",
+    "city": "Nagpur",
+    "type": "Science",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)"
+    ],
+    "streams": [
+      "Science"
+    ],
+    "ranking": 3,
+    "cutoff": "84.0%"
+  },
+  {
+    "name": "L.A.D & Smt. R.P. College for Women Jr. Division",
+    "city": "Nagpur",
+    "type": "Commerce/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Commerce",
+      "11th Arts"
+    ],
+    "streams": [
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 4,
+    "cutoff": "78.0%"
+  },
+  {
+    "name": "Visvesvaraya National Institute of Technology (VNIT)",
+    "city": "Nagpur",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "Mechanical",
+      "Electrical",
+      "Civil",
+      "Chemical",
+      "Electronics & Communication",
+      "Mining"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 1,
+    "cutoff": "98.5%"
+  },
+  {
+    "name": "Yeshwantrao Chavan College of Engineering (YCCE)",
+    "city": "Nagpur",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "IT",
+      "Mechanical",
+      "Civil",
+      "Electrical",
+      "Electronics & Communication"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 2,
+    "cutoff": "94.0%"
+  },
+  {
+    "name": "Government Medical College (GMC) Nagpur",
+    "city": "Nagpur",
+    "type": "Medical",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "MBBS",
+      "MD",
+      "MS"
+    ],
+    "streams": [
+      "Medical"
+    ],
+    "ranking": 1,
+    "cutoff": "NEET 610+"
+  },
+  {
+    "name": "NKP Salve Institute of Medical Sciences (NKPSIMS)",
+    "city": "Nagpur",
+    "type": "Medical",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "MBBS",
+      "BSc Nursing",
+      "BPharm"
+    ],
+    "streams": [
+      "Medical"
+    ],
+    "ranking": 2,
+    "cutoff": "NEET 570+"
+  },
+  {
+    "name": "Hislop College",
+    "city": "Nagpur",
+    "type": "Science/Arts/Commerce",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "BSc Physics",
+      "BSc Chemistry",
+      "BSc Mathematics",
+      "BSc Computer Science",
+      "BSc Biotechnology",
+      "BA History",
+      "BA Economics",
+      "BA Sociology",
+      "BCom"
+    ],
+    "streams": [
+      "Science",
+      "Arts",
+      "Commerce"
+    ],
+    "ranking": 1,
+    "cutoff": "88.0%"
+  },
+  {
+    "name": "Institute of Science Nagpur",
+    "city": "Nagpur",
+    "type": "Science",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "BSc Physics",
+      "BSc Chemistry",
+      "BSc Mathematics",
+      "BSc Computer Science",
+      "BSc Biotechnology",
+      "BSc Microbiology"
+    ],
+    "streams": [
+      "Science"
+    ],
+    "ranking": 2,
+    "cutoff": "85.0%"
+  },
+  {
+    "name": "RYK Junior Science College",
+    "city": "Nashik",
+    "type": "Science",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)"
+    ],
+    "streams": [
+      "Science"
+    ],
+    "ranking": 1,
+    "cutoff": "88.0%"
+  },
+  {
+    "name": "BYK Sinnar Junior College of Commerce",
+    "city": "Nashik",
+    "type": "Commerce",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Commerce"
+    ],
+    "streams": [
+      "Commerce"
+    ],
+    "ranking": 1,
+    "cutoff": "82.0%"
+  },
+  {
+    "name": "New Arts Commerce and Science Junior College",
+    "city": "Nashik",
+    "type": "Science/Commerce/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Commerce",
+      "11th Arts"
+    ],
+    "streams": [
+      "Science",
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 2,
+    "cutoff": "80.0%"
+  },
+  {
+    "name": "K. K. Wagh Institute of Engineering Education and Research",
+    "city": "Nashik",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "IT",
+      "Electrical",
+      "Mechanical",
+      "Civil",
+      "Electronics & Communication"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 1,
+    "cutoff": "94.5%"
+  },
+  {
+    "name": "Sandip Institute of Technology and Research Centre",
+    "city": "Nashik",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "IT",
+      "Mechanical",
+      "Civil",
+      "Electrical"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 2,
+    "cutoff": "89.0%"
+  },
+  {
+    "name": "Dr. Vasantrao Pawar Medical College Hospital and Research Centre",
+    "city": "Nashik",
+    "type": "Medical",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "MBBS",
+      "BSc Nursing",
+      "BPharm"
+    ],
+    "streams": [
+      "Medical"
+    ],
+    "ranking": 1,
+    "cutoff": "NEET 550+"
+  },
+  {
+    "name": "MVP Samaj's Karmaveer Bhaurao Patil College of Engineering",
+    "city": "Nashik",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "Mechanical",
+      "Electrical",
+      "Civil"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 3,
+    "cutoff": "87.0%"
+  },
+  {
+    "name": "New Arts Commerce and Science College (Degree)",
+    "city": "Nashik",
+    "type": "Science/Commerce/Arts",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "BSc Physics",
+      "BSc Chemistry",
+      "BSc Computer Science",
+      "BSc Biotechnology",
+      "BCom",
+      "BA Economics",
+      "BA Psychology"
+    ],
+    "streams": [
+      "Science",
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 1,
+    "cutoff": "82.0%"
+  },
+  {
+    "name": "Deogiri Junior College",
+    "city": "Chhatrapati Sambhaji Nagar",
+    "type": "Science/Commerce/Arts",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Commerce",
+      "11th Arts"
+    ],
+    "streams": [
+      "Science",
+      "Commerce",
+      "Arts"
+    ],
+    "ranking": 1,
+    "cutoff": "84.0%"
+  },
+  {
+    "name": "Vivekanand Junior College",
+    "city": "Chhatrapati Sambhaji Nagar",
+    "type": "Science/Commerce",
+    "for_standard": [
+      "10th"
+    ],
+    "courses": [
+      "11th Science (PCM)",
+      "11th Science (PCB)",
+      "11th Commerce"
+    ],
+    "streams": [
+      "Science",
+      "Commerce"
+    ],
+    "ranking": 2,
+    "cutoff": "80.0%"
+  },
+  {
+    "name": "Government College of Engineering Aurangabad (GECA)",
+    "city": "Chhatrapati Sambhaji Nagar",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "IT",
+      "Mechanical",
+      "Civil",
+      "Electrical",
+      "Electronics & Telecommunication"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 1,
+    "cutoff": "96.0%"
+  },
+  {
+    "name": "MGM College of Engineering",
+    "city": "Chhatrapati Sambhaji Nagar",
+    "type": "Engineering",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "CS",
+      "IT",
+      "Mechanical",
+      "Civil",
+      "Electronics & Telecommunication"
+    ],
+    "streams": [
+      "Engineering"
+    ],
+    "ranking": 2,
+    "cutoff": "90.0%"
+  },
+  {
+    "name": "Government Medical College (Ghati Hospital)",
+    "city": "Chhatrapati Sambhaji Nagar",
+    "type": "Medical",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "MBBS",
+      "MD",
+      "MS"
+    ],
+    "streams": [
+      "Medical"
+    ],
+    "ranking": 1,
+    "cutoff": "NEET 600+"
+  },
+  {
+    "name": "MGM Medical College",
+    "city": "Chhatrapati Sambhaji Nagar",
+    "type": "Medical",
+    "for_standard": [
+      "12th"
+    ],
+    "courses": [
+      "MBBS",
+      "BDS",
+      "BSc Nursing",
+      "BPharm"
+    ],
+    "streams": [
+      "Medical"
+    ],
+    "ranking": 2,
+    "cutoff": "NEET 560+"
+  }
+]

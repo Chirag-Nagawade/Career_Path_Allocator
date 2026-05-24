@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MargIntel - Admin Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .stat-content h3 {
+            font-size: 2rem;
+            margin-bottom: 4px;
+        }
+        .stat-content p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .admin-table-container {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .admin-table th, .admin-table td {
+            padding: 16px 24px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .admin-table th {
+            background-color: var(--bg-alt);
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        .admin-table tbody tr:hover {
+            background-color: var(--bg-alt);
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: var(--radius-pill);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .status-complete {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+        }
+        .status-pending {
+            background-color: #FFF3E0;
+            color: #EF6C00;
+        }
+        .action-btns .btn-icon {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin-right: 12px;
+            transition: var(--transition);
+        }
+        .action-btns .btn-icon:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap text-sage"></i>
+            <h2>MargIntel</h2>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li><a href="assessment.html"><i class="fa-solid fa-clipboard-list"></i> Assessment</a></li>
+            <li><a href="strength.html"><i class="fa-solid fa-dumbbell"></i> Strength Analysis</a></li>
+            <li><a href="prediction.html"><i class="fa-solid fa-bullseye"></i> Career Prediction</a></li>
+            <li><a href="reports.html"><i class="fa-solid fa-file-pdf"></i> PDF Reports</a></li>
+            <li class="menu-divider"></li>
+            <li><a href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a></li>
+            <li><a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            <li id="admin-nav" style="display: block;"><a href="admin.html" class="active"><i class="fa-solid fa-shield-halved"></i> Admin Panel</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout(event)"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <button class="mobile-toggle" id="mobile-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="header-user">
+                <span id="welcome-msg">Admin Mode</span>
+                <div class="user-avatar" id="user-avatar-initial" style="background-color: #D9534F; color: white;">A</div>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <div class="page-title">
+                <h1>System Administration</h1>
+                <p>Monitor platform usage, user assessments, and predictions.</p>
+            </div>
+
+            <div class="admin-stats-grid" id="stats-container">
+                <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-spinner fa-spin"></i></div><div class="stat-content"><h3>-</h3><p>Loading Stats...</p></div></div>
+            </div>
+
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Joined Date</th>
+                            <th>Assessment Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                        <tr><td colspan="5" class="text-center">Loading users...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Simple Modal for User Details (Hidden by default) -->
+            <div id="userModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+                <div style="background: white; padding: 32px; border-radius: 12px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                        <h2 id="modal-title">User Details</h2>
+                        <button onclick="closeModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+                    </div>
+                    <div id="modal-content" style="white-space: pre-wrap; font-family: monospace; background: #f4f4f4; padding: 16px; border-radius: 8px;">
+                        Loading...
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = JSON.parse(localStorage.getItem('margintel_user') || '{}');
+            if (user.role !== 'admin') {
+                alert("Unauthorized Access");
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            if (user.profile_photo_path) {
+                const topAvatar = document.getElementById('user-avatar-initial');
+                topAvatar.style.backgroundImage = `url(${API_BASE_URL}${user.profile_photo_path})`;
+                topAvatar.style.backgroundSize = 'cover';
+                topAvatar.textContent = '';
+            }
+
+            try {
+                // Fetch Stats
+                const statsRes = await fetchWithAuth(`${API_BASE_URL}/admin/stats`);
+                const statsData = await statsRes.json();
+                
+                if (statsData.status) {
+                    const s = statsData.stats;
+                    document.getElementById('stats-container').innerHTML = `
+                        <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-users"></i></div><div class="stat-content"><h3>${s.total_users}</h3><p>Total Users</p></div></div>
+                        <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-clipboard-check"></i></div><div class="stat-content"><h3>${s.completed_assessments}</h3><p>Assessments Completed</p></div></div>
+                        <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-bullseye"></i></div><div class="stat-content"><h3>${s.total_predictions}</h3><p>Total Predictions</p></div></div>
+                        <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-image-portrait"></i></div><div class="stat-content"><h3>${s.users_with_photos}</h3><p>Profiles Setup</p></div></div>
+                    `;
+                }
+
+                // Fetch Users list
+                const usersRes = await fetchWithAuth(`${API_BASE_URL}/admin/users`);
+                const usersData = await usersRes.json();
+                
+                if (usersData.status) {
+                    const tbody = document.getElementById('users-table-body');
+                    tbody.innerHTML = '';
+                    
+                    if (usersData.users.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="5" class="text-center">No users found</td></tr>';
+                    } else {
+                        usersData.users.forEach(u => {
+                            const date = u.created_at ? new Date(u.created_at).toLocaleDateString() : 'N/A';
+                            const statusHTML = u.assessment_completed 
+                                ? '<span class="status-badge status-complete">Completed</span>'
+                                : '<span class="status-badge status-pending">Pending</span>';
+                                
+                            tbody.innerHTML += `
+                                <tr>
+                                    <td><strong>${u.full_name || u.name}</strong></td>
+                                    <td>${u.email}</td>
+                                    <td>${date}</td>
+                                    <td>${statusHTML}</td>
+                                    <td class="action-btns">
+                                        <button class="btn-icon" title="View Details" onclick="viewUser('${u.email}')"><i class="fa-solid fa-eye"></i></button>
+                                        <button class="btn-icon" title="Delete User" style="color: #D9534F;"><i class="fa-solid fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error("Admin error:", error);
+                document.getElementById('stats-container').innerHTML = `<p class="text-error">Error loading admin data: ${error.message}</p>`;
+            }
+
+            document.getElementById('mobile-toggle').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+        });
+
+        async function viewUser(email) {
+            const modal = document.getElementById('userModal');
+            const content = document.getElementById('modal-content');
+            modal.style.display = 'flex';
+            content.innerHTML = 'Fetching data...';
+            
+            try {
+                const res = await fetchWithAuth(`${API_BASE_URL}/admin/users/${email}/details`);
+                const data = await res.json();
+                
+                if (data.status) {
+                    content.innerHTML = JSON.stringify(data, null, 2);
+                } else {
+                    content.innerHTML = `Error: ${data.message}`;
+                }
+            } catch (err) {
+                content.innerHTML = `Error: ${err.message}`;
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('userModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
